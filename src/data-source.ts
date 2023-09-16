@@ -4,6 +4,7 @@ import path from "path";
 
 const dataSourceConfig = (): DataSourceOptions => {
   const entitiesPath: string = path.join(__dirname, "./entities/**.{ts,js}");
+  const migrationPath: string = path.join(__dirname, "./migrations/**.{ts,js}");
 
   const dbUrl: string | undefined = process.env.DATABASE_URL;
 
@@ -15,6 +16,7 @@ const dataSourceConfig = (): DataSourceOptions => {
     logging: true,
     //synchronize: true,
     entities: [entitiesPath],
+    migrations: [migrationPath],
   };
 };
 
