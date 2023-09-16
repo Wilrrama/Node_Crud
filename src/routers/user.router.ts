@@ -8,11 +8,17 @@ import {
 } from "../controllers/user.controllers";
 import { validateBody } from "../middlewares/validateBody.middleware";
 import { userCreateSchema, userUpdateSchema } from "../schemas/user.schema";
-import { verifyUserId } from "../middlewares/verifyUserId.middleware";
+import { verifyUserEmail } from "../middlewares/verifyUserEmail.middleware";
+import { verifyUserId } from "../middlewares/verifyProductId.middleware";
 
 export const userRouter: Router = Router();
 
-userRouter.post("", validateBody(userCreateSchema), createUserController);
+userRouter.post(
+  "",
+  validateBody(userCreateSchema),
+  verifyUserEmail,
+  createUserController
+);
 userRouter.get("", getUsersController);
 userRouter.get("/:userId", verifyUserId, retrieveUserController);
 userRouter.delete("/:userId", verifyUserId, deleteUserController);

@@ -1,20 +1,20 @@
 import { NextFunction, Request, Response } from "express";
-import User from "../entities/User.entity";
-import { userRepo } from "../repositories";
 import { AppError } from "../errors/App.error";
+import { productRepo } from "../repositories";
+import Product from "../entities/Product.entity";
 
-export const verifyUserId = async (
+export const verifyProductId = async (
   req: Request,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const foundUser: User | null = await userRepo.findOneBy({
-    id: Number(req.params.userId),
+  const foundProduct: Product | null = await productRepo.findOneBy({
+    id: Number(req.params.productId),
   });
 
-  if (!foundUser) throw new AppError("User not found.", 404);
+  if (!foundProduct) throw new AppError("Product not found.", 404);
 
-  res.locals = { ...res.locals, foundUser };
+  res.locals = { ...res.locals, foundProduct };
 
   return next();
 };
